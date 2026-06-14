@@ -42,7 +42,7 @@ import bcrypt from 'bcryptjs' ;
             return res.json({sucess:false , message:"Invalid Credential"});
         }
         const token = generateToken(userData._id);
-        res.json({sucess:true,userData,token,message:"Login successfull"});
+        res.json({success:true,userData,token,message:"Login successfull"});
     } catch(error){
         console.log(error.message);
         res.json({success:false,message:error.message});
@@ -59,10 +59,12 @@ import bcrypt from 'bcryptjs' ;
  // update profile
 
  export const updateProfile = async (req,res)=>{
-    try{
-        const {profilePic,bio,fullName} = req.body;
+     try{
+        const {profilePic,bio,fullName} = req.body; 
+        const userId = req.user._id;
+        // console.log(req.user);
+        // console.log(req.user._id);
 
-        const userId = req.user_id;
         let updatedUser;
         if(!profilePic) {
             updatedUser = await User.findByIdAndUpdate(userId,{bio,fullName}, {new:true});
@@ -74,7 +76,35 @@ import bcrypt from 'bcryptjs' ;
 
     } catch(error){
         console.log(error.message);
+        console.log("hii");
+        
         res.json({success:false,message:error.message});
     }
  }
+
+// export const updateProfile = async (req,res)=>{
+//     try {
+
+//         const upload = await cloudinary.uploader.upload(
+//           "https://res.cloudinary.com/demo/image/upload/sample.jpg"
+//         );
+
+//         console.log("SUCCESS");
+//         console.log(JSON.stringify(upload, null, 2));
+
+//         res.json({success:true});
+
+//     } catch(error) {
+
+//         console.log("ERROR");
+//         console.log(error);
+//         console.log(error.message);
+//         console.log(JSON.stringify(error, null, 2));
+
+//         res.json({
+//             success:false,
+//             message:error.message
+//         });
+//     }
+// }
 

@@ -1,6 +1,6 @@
 
 import jwt from 'jsonwebtoken';
-
+import User from "../models/User.js" ;
 // Middleware for authentication 
 
 export const protectedRoute = async (req,res,next)=>{
@@ -15,7 +15,7 @@ export const protectedRoute = async (req,res,next)=>{
         next();
     } catch (error) {
         console.log(error.message);
-        res.json({succes:false,message:error.message});
+        res.json({success:false,message:error.message});
     }
     
 }

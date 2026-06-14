@@ -13,6 +13,10 @@ import { Server } from 'socket.io';
 const app = express();
 const server = http.createServer(app);
 
+// console.log("Cloud:", process.env.CLOUDINARY_CLOUD_NAME);
+// console.log("Key:", process.env.CLOUDINARY_API_KEY);
+// console.log("Secret Exists:", !!process.env.CLOUDINARY_API_SECRET);
+
 //Intiallize socket.io
 export const io = new Server(server,{
     cors:{origin:'*'}
@@ -31,7 +35,7 @@ io.on('connection',(socket)=>{
     io.emit('getOnlineUsers', Object.keys(userSocketMap));
 
     socket.on('disconnect', ()=>{
-        consloe.log('User Disconnect',userId);
+        console.log('User Disconnect',userId);
         delete userSocketMap[userId];
         io.emit('getOnlineUsers',Object.keys(userSocketMap));
     })

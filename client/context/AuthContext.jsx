@@ -8,7 +8,7 @@ axios.defaults.baseURL = backendUrl;
 
 export const AuthContext = createContext();
 
-export const AuthProivder = ({children})=>{
+export const AuthProvider = ({children})=>{
     const [token,setToken] = useState(localStorage.getItem("token"));
     const[authUser,setAuthUser] = useState(null);
     const[onlineUsers,setOnlineUsers] = useState([]);
@@ -32,7 +32,7 @@ export const AuthProivder = ({children})=>{
 
     const login = async(state,credentials)=>{
         try{
-            const{data} = await axios.post(`/api/auth/${statet}`,credentials);
+            const{data} = await axios.post(`/api/auth/${state}`,credentials);
             if(data.success){
                 setAuthUser(data.userData);
                 connectSocket(data.userData);
@@ -62,14 +62,19 @@ export const AuthProivder = ({children})=>{
 
     // update Profile 
 
-    const updateProfile = async(body){
+    const updateProfile = async(body)=>{
         try{
+            
             const {data} = await axios.put('/api/auth/update-profile',body);
+            // console.log(data);
             if(data.success){
                 setAuthUser(data.user);
+              
                 toast.success("Profile Updated successfully");
             }
+            // console.log("hello2");
         }catch(error){
+            // console.log("hiii");
             toast.error(error.message);
         }
     }
